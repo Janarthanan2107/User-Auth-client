@@ -1,5 +1,7 @@
+import { useUserContext } from "../context/userAuth.Context";
+
 const Home = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { user } = useUserContext();
   return (
     <div
       className="flex justify-center items-center h-screen"
