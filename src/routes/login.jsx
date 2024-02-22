@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const initialFormDataValues = {
@@ -100,6 +100,12 @@ const Login = () => {
           <button className="p-5 rounded-lg h-[35px] bg-red-400 flex justify-center items-center mt-2">
             Login
           </button>
+
+          <Link to={"/register"}>
+            <p className="text-black font-bold text-center underline underline-offset-4">
+              Register
+            </p>
+          </Link>
         </form>
       </div>
     </div>

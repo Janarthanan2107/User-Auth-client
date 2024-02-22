@@ -4,23 +4,18 @@ import axios from "axios";
 
 const logout = async (navigate) => {
   try {
-    // Make a request to the logout endpoint
     await axios.post("http://localhost:5000/api/v1/userAuth/logout");
-
-    // If successful, remove user information from local storage
     localStorage.removeItem("user");
     toast.success("User Logged Out Successfully!!");
     setTimeout(() => {
       navigate("/login");
     }, 2000);
   } catch (error) {
-    // Handle error, if any
     console.error("Logout failed:", error);
   }
 };
 
 const Navbar = () => {
-  // Retrieve user information from local storage
   const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
 
