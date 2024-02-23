@@ -27,19 +27,14 @@ const Login = () => {
         formData
       );
 
-      const { token, user } = response.data; // Extract token and user information from response
-
-      console.log(token, user);
-
       // Store token and user information in local storage
-      // localStorage.setItem("token", token);
-      // localStorage.setItem("user", JSON.stringify(user));
+      // localStorage.setItem("user", JSON.stringify(response.data.user));
 
       toast.success(response.data.message);
 
       setTimeout(() => {
         if (response.status === 200) {
-          // navigate("/");
+          navigate("/");
         }
       }, 2000);
     } catch (error) {
