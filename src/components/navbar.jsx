@@ -3,9 +3,14 @@ import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
 import { useUserContext } from "../context/userAuth.Context";
 
-const logout = async (navigate) => {
+const logout = async (navigate, setUser) => {
   try {
-    await axios.get("http://localhost:5000/api/v1/userAuth/logout");
+    await axios.get("http://localhost:5000/api/v1/userAuth/logout", {
+      withCredentials: true,
+    });
+    // Clear token from client-side storage (assuming token is stored in a cookie)
+    // document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    setUser(null);
     toast.success("User Logged Out Successfully!!");
     setTimeout(() => {
       navigate("/login");
@@ -16,11 +21,11 @@ const logout = async (navigate) => {
 };
 
 const Navbar = () => {
-  const { user } = useUserContext();
+  const { user, setUser } = useUserContext();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await logout(navigate);
+    await logout(navigate, setUser);
   };
 
   return (

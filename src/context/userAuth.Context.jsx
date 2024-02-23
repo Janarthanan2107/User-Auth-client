@@ -30,7 +30,7 @@ const UserProvider = ({ children }) => {
     getUser();
   }, []);
 
-  const contextValue = { user, loading, error };
+  const contextValue = { user,setUser, loading, error };
 
   return (
     <UserContext.Provider value={contextValue}>
