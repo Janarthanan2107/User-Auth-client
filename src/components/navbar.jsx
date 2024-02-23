@@ -5,6 +5,8 @@ import axios from "axios";
 const logout = async (navigate) => {
   try {
     await axios.post("http://localhost:5000/api/v1/userAuth/logout");
+    // Remove the token cookie
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     localStorage.removeItem("user");
     toast.success("User Logged Out Successfully!!");
     setTimeout(() => {
