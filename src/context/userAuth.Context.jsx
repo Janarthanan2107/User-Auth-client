@@ -7,11 +7,15 @@ const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const storedUser = JSON.parse(localStorage.getItem("user"));
 
   const getUser = async () => {
     try {
-      setUser(storedUser);
+      const res = await axios.get(
+        "http://localhost:5000/api/v1/userAuth/refetch",
+        { withCredentials: true }
+      );
+      // console.log(res.data)
+      setUser(res.data);
     } catch (error) {
       setError(
         error.response?.data.message ||

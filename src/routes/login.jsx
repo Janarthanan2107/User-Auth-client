@@ -4,39 +4,27 @@ import toast, { Toaster } from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const initialFormDataValues = {
-    email: "",
-    password: "",
-  };
-  const [formData, setFormData] = useState(initialFormDataValues);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   let navigate = useNavigate();
 
-  const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
-
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(
         "http://localhost:5000/api/v1/userAuth/login",
-        formData
+        { email, password },
+        { withCredentials: true }
       );
-
-      // Store token and user information in local storage
-      // localStorage.setItem("user", JSON.stringify(response.data.user));
-
+      console.log(response.data);
       toast.success(response.data.message);
 
       setTimeout(() => {
         if (response.status === 200) {
           navigate("/");
+          window.location.reload();
         }
-      }, 2000);
+      }, 1000);
     } catch (error) {
       console.log(error);
       toast.error(error.response.data.message); // Extract error message from response
@@ -70,15 +58,14 @@ const Login = () => {
         }}
       />
       <div className="bg-blue-400 text-black font-semibold rounded-xl p-8">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <form onSubmit={handleLogin} className="flex flex-col gap-3">
           <div className="flex flex-col gap-1">
             <label>Email:</label>
             <input
               type="email"
               id="email"
               name="email"
-              value={formData.email}
-              onChange={handleOnChange}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               className="h-[50px] p-4 rounded-lg outline-none"
             ></input>
@@ -89,8 +76,7 @@ const Login = () => {
               type="password"
               id="password"
               name="password"
-              value={formData.password}
-              onChange={handleOnChange}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your Password"
               className="h-[50px] p-4 rounded-lg outline-none"
             ></input>

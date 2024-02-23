@@ -1,13 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import axios from "axios";
+import { useUserContext } from "../context/userAuth.Context";
 
 const logout = async (navigate) => {
   try {
-    await axios.post("http://localhost:5000/api/v1/userAuth/logout");
-    // Remove the token cookie
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    localStorage.removeItem("user");
+    await axios.get("http://localhost:5000/api/v1/userAuth/logout");
     toast.success("User Logged Out Successfully!!");
     setTimeout(() => {
       navigate("/login");
@@ -18,7 +16,7 @@ const logout = async (navigate) => {
 };
 
 const Navbar = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const { user } = useUserContext();
   const navigate = useNavigate();
 
   const handleLogout = async () => {
