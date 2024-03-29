@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createContext, useContext, useState, useEffect } from "react";
-import { AuthURL } from "../config";
+import { AuthURL } from "../../config";
 import Loading from "./loading";
 
 const UserContext = createContext();

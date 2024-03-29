@@ -72,7 +72,7 @@ const Navbar = () => {
         {user ? (
           <>
             <p className="flex items-center justify-center font-semibold text-xl border rounded-full w-8 h-8">
-              {user.username.charAt(0)}
+              {user ? user.username?.charAt(0) : ""}
             </p>
 
             <CiMenuKebab
