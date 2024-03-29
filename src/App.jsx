@@ -1,7 +1,18 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Home, Root, Login, Register } from "./routes/index.js";
-
+import { Home, Root, Login, Register, Notfound, Admin } from "./routes/index.js";
+import { useUserContext } from "./context/userAuth.Context.jsx";
 import "./App.css";
+
+// Define a custom route component that checks if the user is an admin
+const AdminRoute = ({ element }) => {
+  const { user } = useUserContext();
+
+  if (!user || !user.admin) {
+    return <Notfound />;
+  }
+
+  return element;
+};
 
 // providing routers with respective components
 const router = createBrowserRouter([
@@ -9,11 +20,14 @@ const router = createBrowserRouter([
     path: "/",
     element: <Root />,
     // error element
-    errorElement: <h1>Page Not Found !</h1>,
+    errorElement: <Notfound />,
 
     // childrens for the root
     children: [
-      // blog
+      {
+        path: "admin",
+        element: <AdminRoute element={<Admin />} />,
+      },
       {
         path: "",
         element: <Home />,
